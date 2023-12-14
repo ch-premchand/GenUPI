@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>UPI Payment URI Generator</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #007bff;
+            text-align: center;
+        }
+        form {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        label {
+            color: #007bff;
+        }
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #uriBox {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        #copyButton {
+            margin-top: 10px;
+        }
+        #generatedURI {
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>UPI Payment URI Generator</h1>
+
+    <form id="upiForm">
+        <div class="form-group">
+            <label for="payee">Payee VPA (UPI ID): </label>
+            <input type="text" class="form-control" id="payee" name="payee" required>
+        </div>
+
+
+        <div class="form-group">
+            <label for="amount">Amount: </label>
+            <input type="text" class="form-control" id="amount" name="amount" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="currency">Currency: </label>
+            <input type="text" class="form-control" id="currency" name="currency" value="INR" required>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block" onclick="generateURI()">Generate URI</button>
+    </form>
+
+    <div id="uriBox">
+        <h2>Generated UPI Payment URI:</h2>
+        <p id="generatedURI"></p>
+        <button id="copyButton" class="btn btn-secondary" onclick="copyToClipboard()">Copy URI</button>
+    </div>
+
+    <script>
+        function generateURI() {
+            const payee = document.getElementById('payee').value;
+            //const name = document.getElementById('name').value;
+            const amount = document.getElementById('amount').value;
+            //const txnId = document.getElementById('txnId').value;
+            const currency = document.getElementById('currency').value;
+
+            //const generatedURI = `upi://pay?pa=${payee}&pn=${name}&mc=&tid=${txnId}&tr=${txnId}&tn=&am=${amount}&cu=${currency}`;
+            const generatedURI = `upi://pay?pa=${payee}&am=${amount}&cu=${currency}`;
+            document.getElementById('generatedURI').innerText = generatedURI;
+        }
+
+        function copyToClipboard() {
+            const uriText = document.getElementById('generatedURI');
+            const textArea = document.createElement('textarea');
+            textArea.value = uriText.innerText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert('URI copied to clipboard!');
+        }
+    </script>
+
+    <!-- Add Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
